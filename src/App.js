@@ -21,13 +21,19 @@ class App extends Component {
       characters: []
     }
 
-    removeCharacter = index => {
+    removeCharacter = (index, id) => {
       const { characters } = this.state
-    
-      this.setState({
-        characters: characters.filter((character, i) => {
-          return i !== index
-        }),
+
+
+      axios.delete('http://localhost:5000/users?id=' + id)
+      .then(res => {
+        if (res.status === 204) {
+          this.setState({
+            characters: characters.filter((character, i) => {
+              return i !== index
+            }),
+          })
+        }
       })
     }
     
